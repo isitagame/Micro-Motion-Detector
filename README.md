@@ -1,4 +1,4 @@
-"# Micro-Motion-Detector" 
+# Micro-Motion-Detector
 
 This is a Micro-Motion Detector based on an Opal Kelly XEM7305 FPGA board.
 
