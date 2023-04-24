@@ -28,7 +28,7 @@
   
   recommended:  10/s ~ 100K/s
   
-  ( Recommended Histogram_update_interval * PMT_pulse_arriving_rate <= 16000 , it is caused by the limitation of the buff depth )
+  ( Recommended Histogram_update_interval * PMT_pulse_arriving_rate <= 16000 , it is limited by the buff depth )
   
 ##
 # File Description
