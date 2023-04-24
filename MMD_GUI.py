@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 MicroMotion Detector with GUI.
-It measures time differences between PMT photon pulses and reference TTL signal triggered by the sine waveform. The histogram of the time differences will be drawn and automatically updated in a configured interval, adding newly measured values into it.
+It measures time differences between PMT photon pulses and RF trigger TTL signal triggered by the RF drive sine waveform. The histogram of the time differences will be drawn and automatically updated in a configured interval, adding newly measured values into it.
 
 @author: Seigen Nakasone
             qingyuan.tian@oist.jp
@@ -28,12 +28,12 @@ PIPEOUT_BUS_WIDTH = 4 # unit: bytes
 MIN_PIPEOUT_LEN_IN_WORD = MIN_PIPEOUT_LEN // PIPEOUT_BUS_WIDTH
 BYTES_PER_TIMEDIFF = 1 
 REDRAW_TIME = 20 # pipeOut I/O and plot animation time per update. (70~80ms might be good for matplotlib cla and draw, 20~30 mus might be good for pyqtgraph)
-N_PERIOD = 5 # a trig'd TTL for every 5 sine waves 
-N_MAX_PROBE = 20 # Try 20 times to probe TTL and PMT pulses, and to measure firo_r_count to calculate pipeout length. If there are no good TTL or PMT signals, notify the user.
-SIZE_BINS_DEFAULT = 107 # The number of the bins of the histogram will be 107 if using 21.5MHz sine wave, 5 sine waves a TTL triggered, sampling clock period 2.17 ns. 
+N_PERIOD = 5 # a RF trigger TTL for every 5 RF drive sine waves 
+N_MAX_PROBE = 20 # Try 20 times to probe RF trigger TTL and PMT pulses, and to measure firo_r_count to calculate pipeout length. If there are no good RF trigger TTL or PMT signals, notify the user.
+SIZE_BINS_DEFAULT = 107 # The number of the bins of the histogram will be 107 if using 21.5MHz sine wave, 5 RF drive sine waves a RF trigger TTL, sampling clock period 2.17 ns. 
 PIPEOUT_LENGTH_DEFAULT = 1024
 ALARM_PROBING = "Probing ... ... "
-ALARM_NO_SIGNALS = "No TTL or PMT Signals ! "
+ALARM_NO_SIGNALS = "No RF trigger TTL or PMT Signals ! "
 ALARM_DETECTING = "IN DETECTING ... ... "
 ALARM_STPPED = "STOPPED ... ... "
 ALARM_TOO_MANY_PHOTON = "Too many photons arriving in an update interval. Try a shorter interal. "
@@ -353,7 +353,7 @@ class MainWindow(QMainWindow):
             mydev = None 
         else:
             mydev = self.dev
-            # probe the TTL and PMT signals
+            # probe the RF trigger TTL and PMT signals
             print(ALARM_PROBING)
             self.TTLPeriod, self.tdiffCountIncr, self.fifoReadCountIncr = self.probeTTLandPMT() 
             readyToDetect = True
@@ -388,7 +388,7 @@ class MainWindow(QMainWindow):
 
     def probeTTLandPMT(self):
         """ 
-            To probe the necessory input signals (TTL and PMT ).
+            To probe the necessory input signals (RF trigger TTL and PMT pulse).
             If continously probed signals and the data is good for Micro-Motion Detecting, return 3 parameters to the detector (they should be all positive). 
             Otherwise, if no good signals probed for 20 times, time out and return 3 parameters with negtive or zero values to indicate the status.
         """
