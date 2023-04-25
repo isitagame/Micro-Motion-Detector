@@ -3,21 +3,30 @@
 - This is a home-made Micro-Motion Detector based on an Opal Kelly XEM7305 FPGA board.
 - Its firmware is written in verilog, software(API module and GUI) in python.
 
-##
+---
 # Usage
-- python MMD_GUI.py
+- signal input
+    * ch1: PMT pulses
+    * ch2: FR trigger
+- command
 
-##
+        python MMD_GUI.py
+
+---
 # Simulation
-- python MMD_GUI.py SIMU 
+- command 
+
+        python MMD_GUI.py SIMU 
+
 (If you don't have a FPGA board, this argument can run the program as a simulator.)
 
-##
+---
 # Requirments
 - Python3.7 or later
 - PyQt5
 - pyqtgraph 0.12 or later
 
+---
 # Specifications
 - Histogram update interval option: 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000 ms.
 - Time resolution:  2.17 ns.
@@ -30,7 +39,7 @@
   
   ( Recommended Histogram_update_interval * PMT_pulse_arriving_rate <= 16000 , it is limited by the buff depth )
   
-##
+---
 # File Description
 - MMD_GUI.py: GUI written in Python
 - XEM7305_MicroMotion_Detector.py: Module(API) of the detector written in Python
@@ -38,3 +47,4 @@
 - firmware/*: source codes of the firmware
 - ok*, _ok*: Opal Kelly API files for the FPGA board (python3.7, Windows)
 
+---
